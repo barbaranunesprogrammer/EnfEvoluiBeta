@@ -20,6 +20,7 @@ def index():
         profissional = request.form.get("profissional", "")
         coren = PROFISSIONAIS_DEMO.get(profissional, "COREN-DEMO")
 
+        setor = request.form.get("setor","")
         consciente = request.form.get("consciente")
         queixa = request.form.get("queixa")
         descricao_queixa = request.form.get("descricao_queixa", "")
@@ -30,6 +31,19 @@ def index():
         medicacao = request.form.get("medicacao")
         desfecho = request.form.get("desfecho")
 
+        
+        if setor == "Sala de medicação":
+            setor = "Sala de Medicação"
+        elif setor == "Observação Pediatrica":
+            setor = "Observação Pediatrica"
+        elif setor == "Observação":
+            setor = "Observação"
+        elif setor == "Sala Vermelha":
+            setor = "Sala Vermelha"
+        else:
+            setor = "Setor não especificado"    
+                
+        
         # Se escolher "Outro", usar o valor digitado
         if abocath == "outro":
             abocath = abocath_outro
@@ -39,7 +53,7 @@ def index():
             abocath = "Abocath não especificado"
 
         texto = "********** VERSÃO DEMONSTRATIVA **********\n\n"
-        texto += f"{h} – Recebo paciente da Sala de Medicação.\n"
+        texto += f"{h} – Recebo paciente na {setor}.\n"
 
         # Estado neurológico
         if consciente == "1":
