@@ -1,8 +1,8 @@
-# 🩺 EnfEvolue – Versão Beta Demonstrativa
+# 🩺 EnfEvolue – Versão Demo
 
 O **EnfEvolue** é uma ferramenta digital desenvolvida para auxiliar na padronização e otimização da evolução técnica de enfermagem.
 
-Esta é a **Versão Beta Demonstrativa**, criada para validação da experiência do usuário e apresentação do produto.
+Esta é a **Versão Demo**, criada para validação da experiência do usuário e apresentação do produto.
 
 ---
 
@@ -30,7 +30,7 @@ Trata-se de um ambiente demonstrativo.
 
 ---
 
-## 💡 Funcionalidades da Versão Beta
+## 💡 Funcionalidades da Versão Demo
 
 - Simulação de geração de evolução técnica
 - Seleção de profissional fictício
