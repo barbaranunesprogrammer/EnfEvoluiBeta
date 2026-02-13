@@ -12,7 +12,7 @@ PROFISSIONAIS_DEMO = {
 def index():
 
     texto = ""
-    mensagem = "⚠️ Versão Beta Demonstrativa – Dados não são armazenados e não possuem validade legal."
+    mensagem = "⚠️ Versão Demonstrativa – Dados não são armazenados e não possuem validade legal."
 
     if request.method == "POST":
 
