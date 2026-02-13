@@ -57,13 +57,15 @@
     </select>
 
     <label>Numeração do abocath</label>
-    <select name="abocath">
+    <select name="abocath" id="abocath">
         <option value="">Selecione</option>
         <option value="18">18</option>
         <option value="20">20</option>
         <option value="22">22</option>
         <option value="24">24</option>
+        <option value="outro">Outro</option>
     </select>
+    <input type="text" name="abocath_outro" id="abocath_outro" placeholder="Digite outro número" style="display:none; margin-top:5px;">
 
     <label>Medicação administrada conforme prescrição?</label>
     <select name="medicacao" required>
@@ -114,6 +116,18 @@
     </p>
     <strong>Desenvolvido por Bárbara Nunes Programmer <a href="https://portfoliobarbara.vercel.app/">Clique aqui para Contato </a></strong>
 </footer>
+
+<!-- Script para mostrar o campo "Outro abocath" apenas quando selecionado -->
+<script>
+document.getElementById("abocath").addEventListener("change", function() {
+    var outroCampo = document.getElementById("abocath_outro");
+    if (this.value === "outro") {
+        outroCampo.style.display = "block";
+    } else {
+        outroCampo.style.display = "none";
+    }
+});
+</script>
 
 </body>
 </html>

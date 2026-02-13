@@ -26,8 +26,17 @@ def index():
         dor = request.form.get("dor", "")
         puncao = request.form.get("puncao")
         abocath = request.form.get("abocath", "")
+        abocath_outro = request.form.get("abocath_outro", "")
         medicacao = request.form.get("medicacao")
         desfecho = request.form.get("desfecho")
+
+        # Se escolher "Outro", usar o valor digitado
+        if abocath == "outro":
+            abocath = abocath_outro
+
+        # Se não informado nenhum valor, usar padrão
+        if not abocath:
+            abocath = "Abocath não especificado"
 
         texto = "********** VERSÃO DEMONSTRATIVA **********\n\n"
         texto += f"{h} – Recebo paciente da Sala de Medicação.\n"
@@ -48,9 +57,7 @@ def index():
 
         # Punção venosa
         if puncao == "1":
-            texto += "Realizada punção venosa.\n"
-            if abocath:
-                texto += f"Utilizado abocath nº {abocath}.\n"
+            texto += f"Realizada punção venosa.\nUtilizado abocath nº {abocath}.\n"
         else:
             texto += "Não foi necessária punção venosa.\n"
 
