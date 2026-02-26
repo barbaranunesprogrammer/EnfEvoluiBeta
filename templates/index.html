@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>EnfEvolue – Versão Demo </title>
+    <title>EnfEvolue – Versão Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -22,76 +22,150 @@
 
 <form method="POST">
 
-    <h2>Simulação de Evolução</h2>
+    <h2>Simulação de Registro</h2>
 
-
-    <label>Setor</label>
-    <select name="setor" id="setor">
+    <!-- TIPO DE REGISTRO -->
+    <label>Tipo de Registro</label>
+    <select id="tipo_registro" name="tipo_registro" required>
         <option value="">Selecione</option>
-        <option value="Sala de medicação">Sala de medicação</option>
-        <option value="Observação Pediatrica">Observação Pediatrica</option>
-        <option value="Observação">Observação</option>
-        <option value="Sala Vermelha">Sala Vermelha</option>
-        <option value="outro">Outro</option>
+        <option value="evolucao">Evolução</option>
+        <option value="curativo">Curativo</option>
     </select>
 
-    <label>Horário da evolução</label>
-    <input type="time" name="horario" required>
+    <!-- ========================= -->
+    <!-- FORMULÁRIO EVOLUÇÃO -->
+    <!-- ========================= -->
 
-    <label>Paciente consciente e orientado?</label>
-    <select name="consciente" required>
+    <div id="formEvolucao">
+
+        <label>Setor</label>
+        <select name="setor">
+            <option value="">Selecione</option>
+            <option value="Sala de medicação">Sala de medicação</option>
+            <option value="Observação Pediatrica">Observação Pediatrica</option>
+            <option value="Observação">Observação</option>
+            <option value="Sala Vermelha">Sala Vermelha</option>
+        </select>
+
+        <label>Horário da evolução</label>
+        <input type="time" name="horario">
+
+        <label>Paciente consciente e orientado?</label>
+        <select name="consciente">
+            <option value="">Selecione</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>
+
+        <label>Paciente se queixa de algo?</label>
+        <select name="queixa">
+            <option value="">Selecione</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>
+
+        <label>Descrição da queixa</label>
+        <input type="text" name="descricao_queixa">
+
+        <label>Escala da dor (0–10)</label>
+        <input type="number" name="dor" min="0" max="10">
+
+        <h3>Procedimentos</h3>
+
+        <label>Punção venosa realizada?</label>
+        <select name="puncao">
+            <option value="">Selecione</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>
+
+        <label>Numeração do abocath</label>
+        <select name="abocath" id="abocath">
+            <option value="">Selecione</option>
+            <option value="18">18</option>
+            <option value="20">20</option>
+            <option value="22">22</option>
+            <option value="24">24</option>
+            <option value="outro">Outro</option>
+        </select>
+
+        <input type="text" name="abocath_outro" id="abocath_outro" 
+               placeholder="Digite outro número" 
+               style="display:none; margin-top:5px;">
+
+        <label>Medicação administrada conforme prescrição?</label>
+        <select name="medicacao">
+            <option value="">Selecione</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>
+
+        <label>Desfecho do paciente</label>
+        <select name="desfecho">
+            <option value="">Selecione</option>
+            <option value="Alta">Alta</option>
+            <option value="Retorna avaliação médica">Retorna avaliação médica</option>
+            <option value="Paciente evadiu">Paciente evadiu</option>
+        </select>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- FORMULÁRIO CURATIVO -->
+    <!-- ========================= -->
+
+   <div id="formCurativo" style="display:none;">
+
+    <h3>Registro de Curativo</h3>
+
+    <label>Horário do procedimento</label>
+    <input type="time" name="horario_curativo">
+
+    <label>Tipo de Curativo</label>
+    <select name="tipo_curativo">
         <option value="">Selecione</option>
-        <option value="1">Sim</option>
-        <option value="2">Não</option>
+        <option value="Simples">Simples</option>
+        <option value="Compressivo">Compressivo</option>
+        <option value="Oclusivo">Oclusivo</option>
+        <option value="Cirúrgico">Cirúrgico</option>
     </select>
 
-    <label>Paciente se queixa de algo?</label>
-    <select name="queixa" required>
+    <h4>Materiais Utilizados</h4>
+
+    Gaze: 
+    <input type="number" name="qtd_gaze" min="0" placeholder="Quantidade"><br><br>
+
+    Álcool 70%:
+    <input type="checkbox" name="alcool" value="Álcool 70%"><br><br>
+
+    Clorexidina:
+    <input type="checkbox" name="clorexidina" value="Clorexidina"><br><br>
+
+    SF 0,9%:
+    <input type="checkbox" name="sf" value="SF 0,9%"><br><br>
+
+    Pomada:
+    <input type="text" name="pomada" placeholder="Ex: Nebacetin"><br><br>
+
+    <label>Outros materiais</label>
+    <input type="text" name="outros_materiais" placeholder="Ex: Cobertura hidrocoloide">
+
+    <h4>Avaliação da Ferida</h4>
+
+    <label>Aspecto</label>
+    <input type="text" name="aspecto" placeholder="Granulação, necrose...">
+
+    <label>Exsudato</label>
+    <select name="exsudato">
         <option value="">Selecione</option>
-        <option value="1">Sim</option>
-        <option value="2">Não</option>
+        <option value="Ausente">Ausente</option>
+        <option value="Seroso">Seroso</option>
+        <option value="Purulento">Purulento</option>
     </select>
 
-    <label>Descrição da queixa</label>
-    <input type="text" name="descricao_queixa">
+</div>
 
-    <label>Escala da dor (0–10)</label>
-    <input type="number" name="dor" min="0" max="10">
-
-    <h2>Procedimentos</h2>
-
-    <label>Punção venosa realizada?</label>
-    <select name="puncao" required>
-        <option value="">Selecione</option>
-        <option value="1">Sim</option>
-        <option value="2">Não</option>
-    </select>
-
-    <label>Numeração do abocath</label>
-    <select name="abocath" id="abocath">
-        <option value="">Selecione</option>
-        <option value="18">18</option>
-        <option value="20">20</option>
-        <option value="22">22</option>
-        <option value="24">24</option>
-        <option value="outro">Outro</option>
-    </select>
-    <input type="text" name="abocath_outro" id="abocath_outro" placeholder="Digite outro número" style="display:none; margin-top:5px;">
-
-    <label>Medicação administrada conforme prescrição?</label>
-    <select name="medicacao" required>
-        <option value="">Selecione</option>
-        <option value="1">Sim</option>
-        <option value="2">Não</option>
-    </select>
-
-    <label>Desfecho do paciente</label>
-    <select name="desfecho">
-        <option value="">Selecione</option>
-        <option value="1">Alta</option>
-        <option value="2">Retorna avaliação médica</option>
-        <option value="3">Paciente evadiu</option>
-    </select>
+    <!-- PROFISSIONAL -->
 
     <h2>Profissional Responsável (Demo)</h2>
 
@@ -104,15 +178,15 @@
     </select>
 
     <label>Observação (opcional)</label>
-    <input type="text" name="observacao" placeholder="Ex: Paciente colaborativo">
+    <input type="text" name="observacao">
 
-    <button type="submit">Gerar Evolução (Simulação)</button>
+    <button type="submit">Gerar Registro (Simulação)</button>
 
 </form>
 
 {% if texto %}
 <section class="resultado">
-    <h2>Evolução Gerada</h2>
+    <h2>Registro Gerado</h2>
     <textarea readonly>{{ texto }}</textarea>
 </section>
 {% endif %}
@@ -125,19 +199,38 @@
         Ferramenta demonstrativa de apoio à evolução técnica de enfermagem<br>
         Não substitui registros oficiais do prontuário eletrônico
     </p>
-    <strong>Desenvolvido por Bárbara Nunes Programmer <a href="https://portfoliobarbara.vercel.app/">Clique aqui para Contato </a></strong>
+    <strong>Desenvolvido por Bárbara Nunes Programmer</strong>
 </footer>
 
-<!-- Script para mostrar o campo "Outro abocath" apenas quando selecionado -->
+<!-- SCRIPT -->
+
 <script>
+
+// Alternar formulário
+document.getElementById("tipo_registro").addEventListener("change", function() {
+
+    let evolucao = document.getElementById("formEvolucao");
+    let curativo = document.getElementById("formCurativo");
+
+    if (this.value === "curativo") {
+        evolucao.style.display = "none";
+        curativo.style.display = "block";
+    } else {
+        evolucao.style.display = "block";
+        curativo.style.display = "none";
+    }
+});
+
+// Campo outro abocath
 document.getElementById("abocath").addEventListener("change", function() {
-    var outroCampo = document.getElementById("abocath_outro");
+    let outroCampo = document.getElementById("abocath_outro");
     if (this.value === "outro") {
         outroCampo.style.display = "block";
     } else {
         outroCampo.style.display = "none";
     }
 });
+
 </script>
 
 </body>

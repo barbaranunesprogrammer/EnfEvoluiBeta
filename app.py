@@ -16,80 +16,125 @@ def index():
 
     if request.method == "POST":
 
-        h = request.form.get("horario", "")
+        tipo = request.form.get("tipo_registro")
+
         profissional = request.form.get("profissional", "")
         coren = PROFISSIONAIS_DEMO.get(profissional, "COREN-DEMO")
 
-        setor = request.form.get("setor","")
-        consciente = request.form.get("consciente")
-        queixa = request.form.get("queixa")
-        descricao_queixa = request.form.get("descricao_queixa", "")
-        dor = request.form.get("dor", "")
-        puncao = request.form.get("puncao")
-        abocath = request.form.get("abocath", "")
-        abocath_outro = request.form.get("abocath_outro", "")
-        medicacao = request.form.get("medicacao")
-        desfecho = request.form.get("desfecho")
-
-        
-        if setor == "Sala de medicação":
-            setor = "Sala de Medicação"
-        elif setor == "Observação Pediatrica":
-            setor = "Observação Pediatrica"
-        elif setor == "Observação":
-            setor = "Observação"
-        elif setor == "Sala Vermelha":
-            setor = "Sala Vermelha"
-        else:
-            setor = "Setor não especificado"    
-                
-        
-        # Se escolher "Outro", usar o valor digitado
-        if abocath == "outro":
-            abocath = abocath_outro
-
-        # Se não informado nenhum valor, usar padrão
-        if not abocath:
-            abocath = "Abocath não especificado"
-
         texto = "********** VERSÃO DEMONSTRATIVA **********\n\n"
-        texto += f"{h} – Recebo paciente na {setor}.\n"
 
-        # Estado neurológico
-        if consciente == "1":
-            texto += "Paciente consciente e orientado.\n"
-        else:
-            texto += "Paciente não consciente ou desorientado.\n"
+        # =========================
+        # 🏥 EVOLUÇÃO NORMAL
+        # =========================
+        if tipo == "evolucao":
 
-        # Queixa
-        if queixa == "1":
-            texto += f"Paciente refere: {descricao_queixa}.\n"
-            if dor:
-                texto += f"Escala de dor referida: {dor}/10.\n"
-        else:
-            texto += "Paciente sem queixas no momento.\n"
+            h = request.form.get("horario", "")
+            setor = request.form.get("setor","")
+            consciente = request.form.get("consciente")
+            queixa = request.form.get("queixa")
+            descricao_queixa = request.form.get("descricao_queixa", "")
+            dor = request.form.get("dor", "")
+            puncao = request.form.get("puncao")
+            abocath = request.form.get("abocath", "")
+            abocath_outro = request.form.get("abocath_outro", "")
+            medicacao = request.form.get("medicacao")
+            desfecho = request.form.get("desfecho")
 
-        # Punção venosa
-        if puncao == "1":
-            texto += f"Realizada punção venosa.\nUtilizado abocath nº {abocath}.\n"
-        else:
-            texto += "Não foi necessária punção venosa.\n"
+            if abocath == "outro":
+                abocath = abocath_outro
 
-        # Medicação
-        if medicacao == "1":
-            texto += "Medicação administrada conforme prescrição médica.\n"
-        else:
-            texto += "Medicação não administrada.\n"
+            if not abocath:
+                abocath = "não especificado"
 
-        # Desfecho
-        if desfecho == "1":
-            texto += "Paciente recebe alta.\n"
-        elif desfecho == "2":
-            texto += "Paciente retorna para avaliação médica.\n"
-        elif desfecho == "3":
-            texto += "Paciente evadiu-se da unidade.\n"
+            texto += f"{h} – Recebo paciente na {setor}.\n"
 
-        texto += f"\n{profissional} – {coren}\nTécnica de Enfermagem\n"
+            # Estado neurológico
+            if consciente == "Sim":
+                texto += "Paciente consciente e orientado.\n"
+            else:
+                texto += "Paciente não consciente ou desorientado.\n"
+
+            # Queixa
+            if queixa == "Sim":
+                texto += f"Paciente refere: {descricao_queixa}.\n"
+                if dor:
+                    texto += f"Escala de dor referida: {dor}/10.\n"
+            else:
+                texto += "Paciente sem queixas no momento.\n"
+
+            # Punção venosa
+            if puncao == "Sim":
+                texto += f"Realizada punção venosa com abocath nº {abocath}.\n"
+            else:
+                texto += "Não foi necessária punção venosa.\n"
+
+            # Medicação
+            if medicacao == "Sim":
+                texto += "Medicação administrada conforme prescrição médica.\n"
+            else:
+                texto += "Medicação não administrada.\n"
+
+            # Desfecho
+            if desfecho:
+                texto += f"{desfecho}.\n"
+
+        # =========================
+        # 🩹 CURATIVO
+        # =========================
+        elif tipo == "curativo":
+
+            h = request.form.get("horario_curativo", "")
+            tipo_curativo = request.form.get("tipo_curativo", "")
+
+            qtd_gaze = request.form.get("qtd_gaze")
+            alcool = request.form.get("alcool")
+            clorexidina = request.form.get("clorexidina")
+            sf = request.form.get("sf")
+            pomada = request.form.get("pomada", "")
+            outros = request.form.get("outros_materiais", "")
+
+            aspecto = request.form.get("aspecto", "")
+            exsudato = request.form.get("exsudato", "")
+
+            texto += f"{h} – Realizado curativo.\n\n"
+            texto += f"Tipo de curativo: {tipo_curativo}.\n"
+
+            materiais = []
+
+            if qtd_gaze and int(qtd_gaze) > 0:
+                materiais.append(f"{qtd_gaze} gaze(s)")
+
+            if alcool:
+                materiais.append("Álcool 70%")
+
+            if clorexidina:
+                materiais.append("Clorexidina")
+
+            if sf:
+                materiais.append("SF 0,9%")
+
+            if pomada:
+                materiais.append(f"Pomada {pomada}")
+
+            if outros:
+                materiais.append(outros)
+
+            if materiais:
+                texto += "Utilizado: " + ", ".join(materiais) + ".\n"
+
+            if aspecto:
+                texto += f"Ferida apresentando aspecto {aspecto}.\n"
+
+            if exsudato:
+                texto += f"Exsudato {exsudato}.\n"
+
+            texto += "Procedimento realizado com técnica asséptica.\n"
+
+        # =========================
+        # PROFISSIONAL
+        # =========================
+        texto += f"\n{profissional} – {coren}\n"
+        texto += "Técnica de Enfermagem\n"
         texto += "\n********** NÃO UTILIZAR COMO DOCUMENTO OFICIAL **********"
 
     return render_template(
